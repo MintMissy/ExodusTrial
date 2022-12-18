@@ -34,7 +34,6 @@ public class RemoveShopTask extends ShopCommandTask {
     NpcManager npcManager = plugin.getNpcManager();
     SpawnedShopNpc spawnedShopNpc = npcManager.getSpawnedShopNpc(player.getUniqueId());
 
-    // TODO have items check
     shopsRepository.removeShop(shop.getOwner());
     Bukkit.getScheduler().runTask(plugin, () -> {
       npcManager.despawnNpc(spawnedShopNpc, Bukkit.getOnlinePlayers());

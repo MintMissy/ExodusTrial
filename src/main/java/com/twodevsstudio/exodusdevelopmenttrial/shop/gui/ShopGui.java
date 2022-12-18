@@ -69,6 +69,7 @@ public class ShopGui extends PageableAbstractGui {
     // TODO additional owner check
     if (event.isShiftClick()) {
       // TODO cancel item sale
+
       return;
     }
 

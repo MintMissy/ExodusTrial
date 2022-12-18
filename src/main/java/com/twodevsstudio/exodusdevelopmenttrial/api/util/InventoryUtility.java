@@ -46,15 +46,19 @@ public class InventoryUtility {
         .toItemStack();
   }
 
-  public ItemStack getCoinItem() {
+  public int countItem(Inventory inventory, ItemStack itemStack){
 
-    return Item.builder()
-        .material(Material.GOLD_INGOT)
-        .displayName("&e⭐ &eM&ay&9s&bt&5e&cr&6i&eo&au&9s &5C&co&6i&en &e⭐")
-        .addLore("")
-        .addLore("&7You can use this coin to buy")
-        .addLore("&7items from shops")
-        .build()
-        .toItemStack();
+    int foundItems = 0;
+    for (ItemStack item : inventory.getContents()) {
+      if (item == null) {
+        continue;
+      }
+
+        if (item.isSimilar(itemStack)) {
+            foundItems += item.getAmount();
+        }
+    }
+
+    return foundItems;
   }
 }

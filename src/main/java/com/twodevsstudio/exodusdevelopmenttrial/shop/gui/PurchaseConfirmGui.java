@@ -41,6 +41,7 @@ public class PurchaseConfirmGui extends AbstractGui {
   }
 
   private void confirmPurchase() {
+
     // TODO buy item
   }
 

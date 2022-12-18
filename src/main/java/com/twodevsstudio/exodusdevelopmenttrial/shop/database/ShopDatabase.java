@@ -8,8 +8,6 @@ import com.twodevsstudio.exodusdevelopmenttrial.config.DatabaseConfig;
 import lombok.Getter;
 import org.bson.Document;
 
-// TODO remove this
-// https://www.spigotmc.org/wiki/bbcode.4280/archive
 public class ShopDatabase {
   @Getter private MongoClient mongoClient;
   @Getter private MongoDatabase shopsDatabase;
