@@ -8,6 +8,7 @@ import com.twodevsstudio.exodusdevelopmenttrial.api.util.InventoryUtility;
 import com.twodevsstudio.exodusdevelopmenttrial.api.util.TextUtility;
 import com.twodevsstudio.exodusdevelopmenttrial.shop.model.BuyableItem;
 import com.twodevsstudio.exodusdevelopmenttrial.shop.model.PlayerShop;
+import com.twodevsstudio.exodusdevelopmenttrial.shop.repository.ShopsRepository;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -21,12 +22,14 @@ import java.util.Map;
 
 public class ShopGui extends PageableAbstractGui {
 
-  private final PlayerShop playerShop;
-  private List<BuyableItem> buyableItemsOnPage;
+  protected final PlayerShop playerShop;
+  protected ShopsRepository shopsRepository;
+  protected List<BuyableItem> buyableItemsOnPage = new ArrayList<>();
 
-  public ShopGui(ExodusDevelopmentTrial plugin, PlayerShop playerShop) {
-    super(plugin);
+  public ShopGui(ExodusDevelopmentTrial plugin, PlayerShop playerShop, Player viewer) {
+    super(plugin, viewer);
 
+    this.shopsRepository = plugin.getShopsRepository();
     this.playerShop = playerShop;
   }
 
@@ -50,7 +53,7 @@ public class ShopGui extends PageableAbstractGui {
 
     int clickedSlot = event.getRawSlot();
     if (isBuyableAreaSlot(clickedSlot) && clickedSlot < buyableItemsOnPage.size()) {
-      onBuyableItemClick(event);
+      onBuyableItemClick(buyableItemsOnPage.get(clickedSlot), event.isShiftClick());
       return;
     }
 
@@ -60,31 +63,29 @@ public class ShopGui extends PageableAbstractGui {
     }
 
     if (clickedItem.getTags().containsKey("add_item")) {
-      new PriceConfigurationGui(plugin).open((Player) event.getWhoClicked());
+      Player player = (Player) event.getWhoClicked();
+      new PriceConfigurationGui(plugin, player).open(player);
     }
   }
 
-  protected void onBuyableItemClick(InventoryClickEvent event) {
+  protected void onBuyableItemClick(BuyableItem item, boolean isShiftClick) {
 
-    // TODO additional owner check
-    if (event.isShiftClick()) {
-      // TODO cancel item sale
-
-      return;
-    }
-
-    // TODO open purchase item inventory
-    return;
+    PurchaseConfirmGui purchaseConfirmGui = new PurchaseConfirmGui(plugin, playerShop, item, viewer);
+    purchaseConfirmGui.open(viewer);
   }
 
   private void setBuyableItems() {
 
-    for (int i = 0; i < buyableItemsOnPage.size(); i++) {
+    for (int i = 0; i < getBuyableAreaSize(); i++) {
+
+      if (buyableItemsOnPage.size() <= i) {
+        inventory.setItem(i, null);
+        continue;
+      }
 
       BuyableItem buyableItem = buyableItemsOnPage.get(i);
       ItemStack itemstack = buyableItem.getItemStack();
-
-      inventory.setItem(i, formatBuyableItem(itemstack, buyableItem));
+      inventory.setItem(i, formatBuyableItem(itemstack.clone(), buyableItem));
     }
   }
 
@@ -106,14 +107,15 @@ public class ShopGui extends PageableAbstractGui {
   protected List<Component> getBuyableItemFooter(BuyableItem buyableItem) {
 
     List<String> soldItemFooter =
-        new Placeholder("{price}", String.valueOf(buyableItem.getPrice()))
+        new Placeholder("%price%", String.valueOf(buyableItem.getPrice()))
             .replaceIn(guiConfig.getSoldItemFooter());
 
     return TextUtility.colorize(soldItemFooter);
   }
 
   protected void updateBuyableItemsData() {
-    int buyableAreaSize = inventory.getSize() - 9;
+
+    int buyableAreaSize = getBuyableAreaSize();
     int minIndex = (currentPage - 1) * buyableAreaSize;
     int maxIndex = currentPage * buyableAreaSize;
 
@@ -123,13 +125,17 @@ public class ShopGui extends PageableAbstractGui {
 
   protected boolean isBuyableAreaSlot(int slot) {
 
-    return slot >= 0 && slot < inventory.getSize() - 9;
+    return slot >= 0 && slot < getBuyableAreaSize();
+  }
+
+  protected int getBuyableAreaSize(){
+     return inventory.getSize() - 18;
   }
 
   @Override
   public int getMaximumPageNumber() {
 
-    return 1;
+    return playerShop.getSoldItems().size() / getBuyableAreaSize() + 1;
   }
 
   @Override

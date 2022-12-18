@@ -21,9 +21,9 @@ public class BuyableItem {
   private ItemStack itemStack;
   private String itemBase64;
 
-  private double price;
+  private int price;
 
-  public BuyableItem(@NotNull ItemStack itemStack, @NotNull UUID seller, double price) {
+  public BuyableItem(@NotNull ItemStack itemStack, @NotNull UUID seller, int price) {
     this.id = new ObjectId();
     this.itemStack = itemStack;
     this.seller = seller;
@@ -35,7 +35,7 @@ public class BuyableItem {
     this.id = new ObjectId(document.get("_id").toString());
     this.seller = UUID.fromString(document.get("seller").toString());
     this.itemBase64 = document.get("itemBase64").toString();
-    this.price = Double.parseDouble(document.get("price").toString());
+    this.price = Integer.parseInt(document.get("price").toString());
   }
 
   public OfflinePlayer getSellerPlayer() {

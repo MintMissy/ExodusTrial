@@ -44,8 +44,8 @@ public class PlayerJoinListener implements Listener {
               }
 
               // TODO fix shop npc on join - no skin & head
-              new SpawnAllExistingNpcsTask(npcManager, player).runTask(plugin);
-              new PlayersShopNpcSpawnTask(npcManager, shop.getNpc()).runTask(plugin);
+              new SpawnAllExistingNpcsTask(npcManager, player).runTaskAsynchronously(plugin);
+              new PlayersShopNpcSpawnTask(npcManager, shop.getNpc()).runTaskAsynchronously(plugin);
             });
   }
 }

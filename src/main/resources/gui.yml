@@ -5,7 +5,7 @@ confirm-purchase-gui:
   size: 45
   layout:
     confirm-purchase:
-      displayName: "&aConfirm Purchase"
+      displayName: "&a&lConfirm Purchase"
       slot: 30
       material: LIME_DYE
       lore: []

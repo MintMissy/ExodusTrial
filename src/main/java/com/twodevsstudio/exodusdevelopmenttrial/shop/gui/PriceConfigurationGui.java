@@ -12,6 +12,7 @@ import com.twodevsstudio.exodusdevelopmenttrial.shop.model.BuyableItem;
 import com.twodevsstudio.exodusdevelopmenttrial.shop.model.PlayerShop;
 import com.twodevsstudio.exodusdevelopmenttrial.shop.repository.ShopsRepository;
 import net.kyori.adventure.text.Component;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
@@ -28,8 +29,8 @@ public class PriceConfigurationGui extends AbstractGui implements CloseGuiListen
   private ItemStack selectedItem;
   private int price = 5;
 
-  public PriceConfigurationGui(ExodusDevelopmentTrial plugin) {
-    super(plugin);
+  public PriceConfigurationGui(ExodusDevelopmentTrial plugin, Player viewer) {
+    super(plugin, viewer);
     shopRepository = plugin.getShopsRepository();
   }
 

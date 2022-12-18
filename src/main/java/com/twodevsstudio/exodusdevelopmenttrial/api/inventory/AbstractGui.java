@@ -22,10 +22,11 @@ public abstract class AbstractGui implements InventoryHolder {
   protected GuiConfig guiConfig;
   protected ExodusDevelopmentTrial plugin;
 
-  public AbstractGui(ExodusDevelopmentTrial plugin) {
+  public AbstractGui(ExodusDevelopmentTrial plugin, Player viewer) {
     this.plugin = plugin;
     this.guiConfig = plugin.getConfigManager().getGuiConfig();
     this.layout = getLayout();
+    this.viewer = viewer;
   }
 
   @NotNull
@@ -74,8 +75,6 @@ public abstract class AbstractGui implements InventoryHolder {
   }
 
   public void open(Player player) {
-
-    viewer = player;
 
     Inventory receivedInventory = getInventory();
     update();

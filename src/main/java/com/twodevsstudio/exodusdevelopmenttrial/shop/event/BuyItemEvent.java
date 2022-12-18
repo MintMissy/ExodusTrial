@@ -1,6 +1,7 @@
 package com.twodevsstudio.exodusdevelopmenttrial.shop.event;
 
 import com.twodevsstudio.exodusdevelopmenttrial.shop.model.BuyableItem;
+import com.twodevsstudio.exodusdevelopmenttrial.shop.model.PlayerShop;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.entity.Player;
@@ -12,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 @RequiredArgsConstructor
 public class BuyItemEvent extends Event {
   private static final HandlerList HANDLERS_LIST = new HandlerList();
+  private final PlayerShop playerShop;
   private final BuyableItem boughtItem;
   private final Player buyer;
 

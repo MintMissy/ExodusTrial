@@ -4,6 +4,7 @@ import com.twodevsstudio.exodusdevelopmenttrial.ExodusDevelopmentTrial;
 import com.twodevsstudio.exodusdevelopmenttrial.api.interfaces.Pageable;
 import com.twodevsstudio.exodusdevelopmenttrial.api.model.item.GuiItem;
 import com.twodevsstudio.exodusdevelopmenttrial.api.model.placeholder.Placeholder;
+import com.twodevsstudio.exodusdevelopmenttrial.api.util.ItemUtility;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -15,8 +16,8 @@ public abstract class PageableAbstractGui extends AbstractGui implements Pageabl
 
   protected int currentPage = 1;
 
-  public PageableAbstractGui(ExodusDevelopmentTrial plugin) {
-    super(plugin);
+  public PageableAbstractGui(ExodusDevelopmentTrial plugin, Player viewer) {
+    super(plugin, viewer);
   }
 
   @Override
@@ -31,12 +32,7 @@ public abstract class PageableAbstractGui extends AbstractGui implements Pageabl
   @Override
   public void onClick(InventoryClickEvent event) {
 
-    GuiItem clickedItem = getClickedLayoutItem(event.getRawSlot());
-    if (clickedItem == null) {
-      return;
-    }
-
-    Map<String, String> itemTags = clickedItem.getTags();
+    Map<String, String> itemTags = ItemUtility.getTagsFromItemStack(event.getCurrentItem());
     if (itemTags.containsKey("previous_page")) {
       openPreviousPage(viewer);
       event.setCancelled(true);
@@ -91,7 +87,7 @@ public abstract class PageableAbstractGui extends AbstractGui implements Pageabl
     if (previousPageItem != null && currentPage > 1) {
       GuiItem itemClone = previousPageItem.clone();
 
-      Placeholder placeholder = new Placeholder("{page}", String.valueOf(currentPage + 1));
+      Placeholder placeholder = new Placeholder("{page}", String.valueOf(currentPage - 1));
       itemClone.setDisplayName(placeholder.replaceIn(itemClone.getDisplayName()));
 
       inventory.setItem(itemClone.getSlot(), itemClone.toItemStack());

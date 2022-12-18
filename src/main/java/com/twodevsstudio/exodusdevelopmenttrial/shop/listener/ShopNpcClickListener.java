@@ -42,9 +42,9 @@ public class ShopNpcClickListener implements Listener {
 
     Player player = event.getClicker();
     if (player.getUniqueId().equals(shop.getOwner())) {
-      new ShopOwnerGui(plugin, shop).open(player);
+      new ShopOwnerGui(plugin, shop, player).open(player);
     } else {
-      new ShopGui(plugin, shop).open(player);
+      new ShopGui(plugin, shop, player).open(player);
     }
   }
 }
