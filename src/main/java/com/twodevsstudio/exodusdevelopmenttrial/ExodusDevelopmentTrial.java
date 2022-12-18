@@ -8,6 +8,7 @@ import com.twodevsstudio.exodusdevelopmenttrial.config.ConfigManager;
 import com.twodevsstudio.exodusdevelopmenttrial.config.MessagesConfig;
 import com.twodevsstudio.exodusdevelopmenttrial.npc.listener.NpcClickListener;
 import com.twodevsstudio.exodusdevelopmenttrial.npc.manager.NpcManager;
+import com.twodevsstudio.exodusdevelopmenttrial.api.factory.PacketFactory;
 import com.twodevsstudio.exodusdevelopmenttrial.shop.command.ShopCommand;
 import com.twodevsstudio.exodusdevelopmenttrial.shop.command.ShopTabCompletion;
 import com.twodevsstudio.exodusdevelopmenttrial.shop.database.ShopDatabase;
@@ -30,12 +31,14 @@ public final class ExodusDevelopmentTrial extends JavaPlugin {
   private NpcManager npcManager;
   private ShopDatabase shopDatabase;
   private ShopsRepository shopsRepository;
+  private PacketFactory packetFactory;
 
   @Override
   public void onEnable() {
 
     configManager = new ConfigManager(this);
     protocolManager = ProtocolLibrary.getProtocolManager();
+    packetFactory = new PacketFactory(protocolManager);
     npcManager = new NpcManager(this);
 
     initializeDatabases();

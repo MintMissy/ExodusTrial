@@ -95,7 +95,7 @@ public class NpcManager {
   public void despawnNpc(
       AbstractSpawnedNpc spawnedNpc, Collection<? extends Player> packetReceivers) {
 
-    npcPacketManager.sendDespawnNpcPackets(spawnedNpc.getEntityId(), packetReceivers);
+    npcPacketManager.sendDespawnEntityPacket(spawnedNpc.getEntityId(), packetReceivers);
     spawnedNpcs.remove(spawnedNpc.getEntityId());
   }
 
