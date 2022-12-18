@@ -1,0 +1,39 @@
+# Generic messages
+generic:
+  only-player-command: "&cThis command can be executed only by players!"
+  no-permission: "&cYou don't have permission to execute this command!"
+
+# Shop command messages
+shop:
+  create: "&aYou have created a shop!"
+  cannot-create-have-shop: "&cYou cannot create a shop because you already have one!"
+  relocate: "&aYou have relocated your shop!"
+  cannot-relocate-no-shop: "&cYou don't have a shop!"
+  remove: "&aYou have removed your shop!"
+  cannot-remove-with-items: "&cYou cannot remove you shop because it contains items!"
+  cannot-remove-no-shop: "&cYou don't have a shop!"
+  help:
+    - "&e&lShop Commands"
+    - "&e/shop create &7- Create a shop"
+    - "&e/shop remove &7- Remove your shop"
+    - "&e/shop relocate &7- Relocate your shop"
+
+# Buy item messages
+buy-item:
+  message: "&aYou've bought {itemName} for {price}"
+  title:
+    title: "&aYou've bought {itemName}"
+    subTitle: "&afor {price}"
+    fadeIn: 500
+    stay: 2000
+    fadeOut: 500
+
+# Sell item messages
+sell-item:
+  message: "&a{playerName} bought {itemName} from your shop. You've received {price}"
+  title:
+    title: "&aYou've sold {itemName}"
+    subTitle: "&eBuyer: {buyer}"
+    fadeIn: 500
+    stay: 2000
+    fadeOut: 500

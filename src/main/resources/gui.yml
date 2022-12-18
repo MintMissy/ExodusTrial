@@ -1,0 +1,125 @@
+# Purchase Item GUI
+purchased-item-preview-slot: 13
+confirm-purchase-gui:
+  title: "&c&lAre you sure?"
+  size: 45
+  layout:
+    confirm-purchase:
+      displayName: "&aConfirm Purchase"
+      slot: 30
+      material: LIME_DYE
+      lore: []
+      tags:
+        confirm_purchase: "true"
+    cancel-purchase:
+      displayName: "&c&lCancel Purchase"
+      slot: 32
+      material: BARRIER
+      lore: []
+      tags:
+        cancel_purchase: "true"
+
+# Shop Gui - Listed items
+shop-gui:
+  title: "&e&l{player}'s Shop"
+  size: 54
+  layout:
+    next-page:
+      displayName: "&e&lOpen Next Page &7({page})"
+      slot: 50
+      material: ARROW
+      lore: []
+      tags:
+        next_page: "true"
+    previous-page:
+      displayName: "&e&lOpen Previous Page &7({page})"
+      slot: 48
+      material: ARROW
+      lore: []
+      tags:
+        previous_page: "true"
+    add-item:
+      displayName: "&e&l✦ &a&lAdd New Item &e&l✦"
+      slot: 49
+      material: BOOK
+      lore:
+        - "&7Click to list a new item in your shop."
+      tags:
+        add_item: "true"
+shop-item-footer:
+  - ""
+  - "&7Price: &a%price%"
+  - ""
+  - "&eClick to purchase this item"
+shop-item-owner-footer:
+  - "&cShift Click to remove this item"
+
+
+# Price configuration gui
+price-configuration-gui:
+  title: "&e&lPrice Configuration"
+  size: 45
+  layout:
+    remove-price-20:
+      displayName: "&c&lDecrease Price by 20"
+      slot: 19
+      material: REDSTONE_BLOCK
+      lore: []
+      tags:
+        price_change: "-20"
+    remove-price-10:
+      displayName: "&c&lDecrease Price by 10"
+      slot: 20
+      material: REDSTONE_BLOCK
+      lore: []
+      tags:
+        price_change: "-10"
+    remove-price-1:
+      displayName: "&c&lDecrease Price by 1"
+      slot: 21
+      material: REDSTONE_BLOCK
+      lore: []
+      tags:
+        price_change: "-1"
+    add-price-20:
+      displayName: "&a&lIncrease Price by 20"
+      slot: 25
+      material: EMERALD_BLOCK
+      lore: []
+      tags:
+        price_change: "20"
+    add-price-10:
+      displayName: "&a&lIncrease Price by 10"
+      slot: 24
+      material: EMERALD_BLOCK
+      lore: []
+      tags:
+        price_change: "10"
+    add-price-1:
+      displayName: "&a&lIncrease Price by 1"
+      slot: 23
+      material: EMERALD_BLOCK
+      lore: []
+      tags:
+        price_change: "1"
+    dummy-item:
+      displayName: "&c&lNo Item Selected"
+      slot: 13
+      material: BARRIER
+      lore:
+        - ""
+        - "&7Click in the Item that you"
+        - "&7want to sell"
+      tags: {}
+    confirm-sell:
+      displayName: "&a&lConfirm Sell"
+      slot: 40
+      material: LIME_DYE
+      lore:
+        - ""
+        - "&7Sell Price: &f{price}"
+        - ""
+        - "&eClick here to list this"
+        - "&eitem for sale"
+      tags:
+        confirm_sell: "true"

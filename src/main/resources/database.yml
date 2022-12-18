@@ -1,0 +1,12 @@
+# Database Configuration
+host: "localhost"
+port: 27020
+user: "user"
+password: "password"
+
+# Database Uri, leave "" to use the data above
+uri: ""
+
+# Databases
+shops-database-name: "PlayerShops"
+shops-collection-name: "PlayerShopsCollection"

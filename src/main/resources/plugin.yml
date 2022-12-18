@@ -1,0 +1,10 @@
+name: ExodusDevelopmentTrial
+version: '${project.version}'
+main: com.twodevsstudio.exodusdevelopmenttrial.ExodusDevelopmentTrial
+api-version: 1.19
+depend: [ ProtocolLib ]
+author: MintMissy
+commands:
+  shop:
+    description: Shop management command
+    usage: /shop create|relocate|remove
