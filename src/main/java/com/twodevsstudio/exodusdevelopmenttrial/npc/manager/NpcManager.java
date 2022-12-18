@@ -22,6 +22,8 @@ public class NpcManager {
   private final NpcPacketManager npcPacketManager;
   private final ExodusDevelopmentTrial plugin;
 
+  // TODO async threading
+
   public NpcManager(ExodusDevelopmentTrial plugin) {
     this.plugin = plugin;
     this.npcPacketManager = new NpcPacketManager(plugin);

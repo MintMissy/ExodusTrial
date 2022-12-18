@@ -1,11 +1,12 @@
 package com.twodevsstudio.exodusdevelopmenttrial.shop.task;
 
 import com.twodevsstudio.exodusdevelopmenttrial.ExodusDevelopmentTrial;
+import com.twodevsstudio.exodusdevelopmenttrial.api.task.GetPlayersTask;
 import com.twodevsstudio.exodusdevelopmenttrial.npc.model.npc.ShopNpcTemplate;
 import com.twodevsstudio.exodusdevelopmenttrial.shop.model.PlayerShop;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.Collection;
 import java.util.UUID;
 
 public class CreateShopTask extends ShopCommandTask {
@@ -30,12 +31,11 @@ public class CreateShopTask extends ShopCommandTask {
     shop = new PlayerShop(uniqueId, npcTemplate);
     shopsRepository.createShop(shop);
 
-    Bukkit.getScheduler()
-        .runTask(
+    new GetPlayersTask(
             plugin,
-            () -> {
-              npcManager.spawnNewShopNpc(npcTemplate, Bukkit.getOnlinePlayers());
-            });
+            (Collection<? extends Player> onlinePlayers) ->
+                npcManager.spawnNewShopNpc(npcTemplate, onlinePlayers))
+        .runTask(plugin);
 
     sendResponseMessage(player, messagesConfig.getCreateShop());
   }

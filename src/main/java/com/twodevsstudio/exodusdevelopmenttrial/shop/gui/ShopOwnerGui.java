@@ -6,8 +6,8 @@ import com.twodevsstudio.exodusdevelopmenttrial.api.util.TextUtility;
 import com.twodevsstudio.exodusdevelopmenttrial.shop.model.BuyableItem;
 import com.twodevsstudio.exodusdevelopmenttrial.shop.model.PlayerShop;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
 
 import java.util.List;
 
@@ -20,22 +20,21 @@ public class ShopOwnerGui extends ShopGui {
   @Override
   protected void onBuyableItemClick(BuyableItem item, boolean isShiftClick) {
 
-    if (isShiftClick && viewer.getUniqueId().equals(playerShop.getOwner())) {
-      InventoryUtility.giveOrDropItem(viewer, item.getItemStack());
-      shopsRepository.removeItemFromShop(playerShop, item);
-      update();
-      return;
-    }
+    InventoryUtility.giveOrDropItem(viewer, item.getItemStack());
 
-    super.onBuyableItemClick(item, isShiftClick);
+    Bukkit.getScheduler()
+        .runTaskAsynchronously(
+            plugin,
+            () -> {
+              shopsRepository.removeItemFromShop(playerShop, item);
+              Bukkit.getScheduler().runTask(plugin, this::update);
+            });
   }
 
   @Override
   protected List<Component> getBuyableItemFooter(BuyableItem buyableItem) {
 
-    List<Component> footer = super.getBuyableItemFooter(buyableItem);
-    footer.addAll(TextUtility.colorize(guiConfig.getSoldItemOwnerFooter()));
-
-    return footer;
+    return TextUtility.colorize(
+        replacePlaceholdersInItemLore(guiConfig.getSoldItemOwnerFooter(), buyableItem));
   }
 }

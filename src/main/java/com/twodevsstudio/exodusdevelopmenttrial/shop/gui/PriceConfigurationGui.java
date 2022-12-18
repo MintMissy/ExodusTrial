@@ -12,12 +12,12 @@ import com.twodevsstudio.exodusdevelopmenttrial.shop.model.BuyableItem;
 import com.twodevsstudio.exodusdevelopmenttrial.shop.model.PlayerShop;
 import com.twodevsstudio.exodusdevelopmenttrial.shop.repository.ShopsRepository;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -122,8 +122,14 @@ public class PriceConfigurationGui extends AbstractGui implements CloseGuiListen
       return;
     }
 
-    BuyableItem buyableItem = new BuyableItem(selectedItem.clone(), viewer.getUniqueId(), price);
-    shopRepository.addItemToShop(shop, buyableItem);
+    Bukkit.getScheduler()
+        .runTaskAsynchronously(
+            plugin,
+            () -> {
+              BuyableItem buyableItem =
+                  new BuyableItem(selectedItem.clone(), viewer.getUniqueId(), price);
+              shopRepository.addItemToShop(shop, buyableItem);
+            });
 
     selectedItem = null;
   }

@@ -2,8 +2,6 @@ package com.twodevsstudio.exodusdevelopmenttrial.shop.listener;
 
 import com.twodevsstudio.exodusdevelopmenttrial.ExodusDevelopmentTrial;
 import com.twodevsstudio.exodusdevelopmenttrial.npc.manager.NpcManager;
-import com.twodevsstudio.exodusdevelopmenttrial.npc.task.PlayersShopNpcSpawnTask;
-import com.twodevsstudio.exodusdevelopmenttrial.npc.task.SpawnAllExistingNpcsTask;
 import com.twodevsstudio.exodusdevelopmenttrial.shop.model.PlayerShop;
 import com.twodevsstudio.exodusdevelopmenttrial.shop.repository.ShopsRepository;
 import org.bukkit.Bukkit;
@@ -12,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import java.util.Collections;
 import java.util.UUID;
 
 public class PlayerJoinListener implements Listener {
@@ -44,8 +43,8 @@ public class PlayerJoinListener implements Listener {
               }
 
               // TODO fix shop npc on join - no skin & head
-              new SpawnAllExistingNpcsTask(npcManager, player).runTaskAsynchronously(plugin);
-              new PlayersShopNpcSpawnTask(npcManager, shop.getNpc()).runTaskAsynchronously(plugin);
+              npcManager.spawnAllExistingNpcs(Collections.singletonList(player));
+              npcManager.spawnNewShopNpc(shop.getNpc(), Bukkit.getOnlinePlayers());
             });
   }
 }

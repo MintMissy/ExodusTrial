@@ -47,13 +47,17 @@ public class PurchaseConfirmGui extends AbstractGui {
 
   private void confirmPurchase(Player buyer) {
 
-    if (!CoinUtility.hasEnoughCoins(buyer, buyableItem.getPrice())){
+    if (!CoinUtility.hasEnoughCoins(viewer, buyableItem.getPrice())) {
+      viewer.sendMessage(TextUtility.colorize(messagesConfig.getNotEnoughCoinsShop()));
       return;
     }
 
     BuyItemEvent buyItemEvent = new BuyItemEvent(playerShop, buyableItem, buyer);
     Bukkit.getPluginManager().callEvent(buyItemEvent);
-    shopsRepository.removeItemFromShop(playerShop, buyableItem);
+
+    Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+      shopsRepository.removeItemFromShop(playerShop, buyableItem);
+    });
 
     CoinUtility.removeCoins(buyer, buyableItem.getPrice());
     buyer.getInventory().addItem(buyableItem.getItemStack());

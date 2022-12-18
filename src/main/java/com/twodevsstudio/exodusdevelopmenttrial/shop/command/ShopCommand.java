@@ -1,6 +1,8 @@
 package com.twodevsstudio.exodusdevelopmenttrial.shop.command;
 
 import com.twodevsstudio.exodusdevelopmenttrial.ExodusDevelopmentTrial;
+import com.twodevsstudio.exodusdevelopmenttrial.api.util.CoinUtility;
+import com.twodevsstudio.exodusdevelopmenttrial.api.util.InventoryUtility;
 import com.twodevsstudio.exodusdevelopmenttrial.api.util.TextUtility;
 import com.twodevsstudio.exodusdevelopmenttrial.config.MessagesConfig;
 import com.twodevsstudio.exodusdevelopmenttrial.npc.manager.NpcManager;
@@ -50,6 +52,7 @@ public class ShopCommand implements CommandExecutor {
       case "create" -> onCreateShop(player);
       case "remove" -> onRemoveShop(player);
       case "relocate" -> onRelocateShop(player);
+      case "coin" -> onCoin(player);
       default -> onHelp(player);
     }
 
@@ -74,6 +77,16 @@ public class ShopCommand implements CommandExecutor {
     }
 
     new RelocateShopTask(plugin, player).runTaskAsynchronously(plugin);
+  }
+
+  private void onCoin(Player player) {
+
+    if (!player.hasPermission("exodusdevelopmenttrial.shop.coin")) {
+      player.sendMessage(TextUtility.colorize(messagesConfig.getNoPermission()));
+      return;
+    }
+
+    InventoryUtility.giveOrDropItem(player, CoinUtility.getCoinItem());
   }
 
   private void onRemoveShop(Player player) {

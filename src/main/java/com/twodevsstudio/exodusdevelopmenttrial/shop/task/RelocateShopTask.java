@@ -1,13 +1,14 @@
 package com.twodevsstudio.exodusdevelopmenttrial.shop.task;
 
 import com.twodevsstudio.exodusdevelopmenttrial.ExodusDevelopmentTrial;
+import com.twodevsstudio.exodusdevelopmenttrial.api.task.GetPlayersTask;
 import com.twodevsstudio.exodusdevelopmenttrial.npc.model.npc.ShopNpcTemplate;
 import com.twodevsstudio.exodusdevelopmenttrial.npc.model.npc.SpawnedShopNpc;
 import com.twodevsstudio.exodusdevelopmenttrial.shop.model.PlayerShop;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import java.util.Collection;
 import java.util.UUID;
 
 public class RelocateShopTask extends ShopCommandTask {
@@ -32,15 +33,13 @@ public class RelocateShopTask extends ShopCommandTask {
 
     ShopNpcTemplate npcTemplate = shop.getNpc();
     shopsRepository.relocateShop(shop, newLocation);
-    SpawnedShopNpc spawnedShopNpc = npcManager
-            .getSpawnedShopNpc(npcTemplate.getShopOwner());
+    SpawnedShopNpc spawnedShopNpc = npcManager.getSpawnedShopNpc(npcTemplate.getShopOwner());
 
-    Bukkit.getScheduler()
-        .runTask(
+    new GetPlayersTask(
             plugin,
-            () -> {
-              npcManager.updateNpcPosition(spawnedShopNpc, newLocation, Bukkit.getOnlinePlayers());
-            });
+            (Collection<? extends Player> players) ->
+                npcManager.updateNpcPosition(spawnedShopNpc, newLocation, players))
+        .runTask(plugin);
 
     sendResponseMessage(player, messagesConfig.getRelocateShop());
   }

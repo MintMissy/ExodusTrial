@@ -34,6 +34,9 @@ public class ShopTabCompletion implements TabCompleter {
     if (sender.hasPermission("exodusdevelopmenttrial.shop.relocate")) {
       completions.add("relocate");
     }
+    if (sender.hasPermission("exodusdevelopmenttrial.shop.coin")) {
+      completions.add("coin");
+    }
 
     return completions;
   }

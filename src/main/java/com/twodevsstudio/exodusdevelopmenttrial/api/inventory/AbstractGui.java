@@ -3,6 +3,7 @@ package com.twodevsstudio.exodusdevelopmenttrial.api.inventory;
 import com.twodevsstudio.exodusdevelopmenttrial.ExodusDevelopmentTrial;
 import com.twodevsstudio.exodusdevelopmenttrial.api.model.item.GuiItem;
 import com.twodevsstudio.exodusdevelopmenttrial.config.GuiConfig;
+import com.twodevsstudio.exodusdevelopmenttrial.config.MessagesConfig;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -20,11 +21,13 @@ public abstract class AbstractGui implements InventoryHolder {
   protected Inventory inventory;
   protected Map<String, GuiItem> layout;
   protected GuiConfig guiConfig;
+  protected MessagesConfig messagesConfig;
   protected ExodusDevelopmentTrial plugin;
 
   public AbstractGui(ExodusDevelopmentTrial plugin, Player viewer) {
     this.plugin = plugin;
     this.guiConfig = plugin.getConfigManager().getGuiConfig();
+    this.messagesConfig = plugin.getConfigManager().getMessagesConfig();
     this.layout = getLayout();
     this.viewer = viewer;
   }

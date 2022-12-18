@@ -12,8 +12,10 @@ shop:
   remove: "&aYou have removed your shop!"
   cannot-remove-with-items: "&cYou cannot remove you shop because it contains items!"
   cannot-remove-no-shop: "&cYou don't have a shop!"
+  not-enough-coins: "&cYou don't have enough coins to purchase this item!"
   help:
     - "&e&lShop Commands"
+    - "&e/shop coin &7- Get a coin item"
     - "&e/shop create &7- Create a shop"
     - "&e/shop remove &7- Remove your shop"
     - "&e/shop relocate &7- Relocate your shop"

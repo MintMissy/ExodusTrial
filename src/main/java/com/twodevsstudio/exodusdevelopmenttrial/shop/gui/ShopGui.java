@@ -4,8 +4,10 @@ import com.twodevsstudio.exodusdevelopmenttrial.ExodusDevelopmentTrial;
 import com.twodevsstudio.exodusdevelopmenttrial.api.inventory.PageableAbstractGui;
 import com.twodevsstudio.exodusdevelopmenttrial.api.model.item.GuiItem;
 import com.twodevsstudio.exodusdevelopmenttrial.api.model.placeholder.Placeholder;
+import com.twodevsstudio.exodusdevelopmenttrial.api.util.CoinUtility;
 import com.twodevsstudio.exodusdevelopmenttrial.api.util.InventoryUtility;
 import com.twodevsstudio.exodusdevelopmenttrial.api.util.TextUtility;
+import com.twodevsstudio.exodusdevelopmenttrial.config.MessagesConfig;
 import com.twodevsstudio.exodusdevelopmenttrial.shop.model.BuyableItem;
 import com.twodevsstudio.exodusdevelopmenttrial.shop.model.PlayerShop;
 import com.twodevsstudio.exodusdevelopmenttrial.shop.repository.ShopsRepository;
@@ -70,7 +72,13 @@ public class ShopGui extends PageableAbstractGui {
 
   protected void onBuyableItemClick(BuyableItem item, boolean isShiftClick) {
 
-    PurchaseConfirmGui purchaseConfirmGui = new PurchaseConfirmGui(plugin, playerShop, item, viewer);
+    if (!CoinUtility.hasEnoughCoins(viewer, item.getPrice())) {
+      viewer.sendMessage(TextUtility.colorize(messagesConfig.getNotEnoughCoinsShop()));
+      return;
+    }
+
+    PurchaseConfirmGui purchaseConfirmGui =
+        new PurchaseConfirmGui(plugin, playerShop, item, viewer);
     purchaseConfirmGui.open(viewer);
   }
 
@@ -106,11 +114,13 @@ public class ShopGui extends PageableAbstractGui {
 
   protected List<Component> getBuyableItemFooter(BuyableItem buyableItem) {
 
-    List<String> soldItemFooter =
-        new Placeholder("%price%", String.valueOf(buyableItem.getPrice()))
-            .replaceIn(guiConfig.getSoldItemFooter());
+    return TextUtility.colorize(
+        replacePlaceholdersInItemLore(guiConfig.getSoldItemFooter(), buyableItem));
+  }
 
-    return TextUtility.colorize(soldItemFooter);
+  protected List<String> replacePlaceholdersInItemLore(List<String> lore, BuyableItem buyableItem) {
+
+    return new Placeholder("%price%", String.valueOf(buyableItem.getPrice())).replaceIn(lore);
   }
 
   protected void updateBuyableItemsData() {
@@ -128,8 +138,8 @@ public class ShopGui extends PageableAbstractGui {
     return slot >= 0 && slot < getBuyableAreaSize();
   }
 
-  protected int getBuyableAreaSize(){
-     return inventory.getSize() - 18;
+  protected int getBuyableAreaSize() {
+    return inventory.getSize() - 18;
   }
 
   @Override

@@ -1,12 +1,13 @@
 package com.twodevsstudio.exodusdevelopmenttrial.shop.task;
 
 import com.twodevsstudio.exodusdevelopmenttrial.ExodusDevelopmentTrial;
+import com.twodevsstudio.exodusdevelopmenttrial.api.task.GetPlayersTask;
 import com.twodevsstudio.exodusdevelopmenttrial.npc.manager.NpcManager;
 import com.twodevsstudio.exodusdevelopmenttrial.npc.model.npc.SpawnedShopNpc;
 import com.twodevsstudio.exodusdevelopmenttrial.shop.model.PlayerShop;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.Collection;
 import java.util.UUID;
 
 public class RemoveShopTask extends ShopCommandTask {
@@ -35,9 +36,11 @@ public class RemoveShopTask extends ShopCommandTask {
     SpawnedShopNpc spawnedShopNpc = npcManager.getSpawnedShopNpc(player.getUniqueId());
 
     shopsRepository.removeShop(shop.getOwner());
-    Bukkit.getScheduler().runTask(plugin, () -> {
-      npcManager.despawnNpc(spawnedShopNpc, Bukkit.getOnlinePlayers());
-    });
+    new GetPlayersTask(
+            plugin,
+            (Collection<? extends Player> players) ->
+                npcManager.despawnNpc(spawnedShopNpc, players))
+        .runTask(plugin);
 
     sendResponseMessage(player, messagesConfig.getRemoveShop());
   }

@@ -20,8 +20,6 @@ public class ShopsRepository {
 
   private final HashMap<UUID, PlayerShop> cachedShops = new HashMap<>();
 
-  // TODO move uses of repository to bukkit async runnables
-
   @Nullable
   public PlayerShop getShop(UUID ownerUuid) {
 

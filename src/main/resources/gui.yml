@@ -52,7 +52,10 @@ shop-item-footer:
   - ""
   - "&eClick to purchase this item"
 shop-item-owner-footer:
-  - "&cShift Click to remove this item"
+  - ""
+  - "&7Price: &a%price%"
+  - ""
+  - "&cClick to remove this item"
 
 
 # Price configuration gui
