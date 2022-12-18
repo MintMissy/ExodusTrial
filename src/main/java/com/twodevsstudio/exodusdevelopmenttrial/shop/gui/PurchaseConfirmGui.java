@@ -61,6 +61,7 @@ public class PurchaseConfirmGui extends AbstractGui {
 
     CoinUtility.removeCoins(buyer, buyableItem.getPrice());
     buyer.getInventory().addItem(buyableItem.getItemStack());
+    buyer.closeInventory();
 
     Player seller = Bukkit.getPlayer(playerShop.getOwner());
     CoinUtility.addCoins(seller, buyableItem.getPrice());

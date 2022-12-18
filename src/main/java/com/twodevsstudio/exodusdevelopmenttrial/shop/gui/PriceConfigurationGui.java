@@ -117,17 +117,22 @@ public class PriceConfigurationGui extends AbstractGui implements CloseGuiListen
 
   private void listItemOnSale() {
 
+    if (selectedItem == null) {
+      return;
+    }
+
     PlayerShop shop = shopRepository.getShop(viewer.getUniqueId());
     if (shop == null) {
       return;
     }
 
+    ItemStack selectedItemClone = selectedItem.clone();
     Bukkit.getScheduler()
         .runTaskAsynchronously(
             plugin,
             () -> {
               BuyableItem buyableItem =
-                  new BuyableItem(selectedItem.clone(), viewer.getUniqueId(), price);
+                  new BuyableItem(selectedItemClone, viewer.getUniqueId(), price);
               shopRepository.addItemToShop(shop, buyableItem);
             });
 

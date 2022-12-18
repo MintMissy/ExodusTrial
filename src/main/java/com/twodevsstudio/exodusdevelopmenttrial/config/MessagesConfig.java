@@ -48,7 +48,7 @@ public class MessagesConfig extends Config {
     removeShop = configuration.getString("shop.remove");
     cannotRemoveShopWithItems = configuration.getString("shop.cannot-remove-with-items");
     cannotRemoveShopNoShop = configuration.getString("shop.cannot-remove-no-shop");
-    notEnoughCoinsShop = configuration.getString("not-enough-coins");
+    notEnoughCoinsShop = configuration.getString("shop.not-enough-coins");
     shopHelp = configuration.getStringList("shop.help");
 
     buyItemMessage = configuration.getString("buy-item.message");

@@ -5,11 +5,11 @@ generic:
 
 # Shop command messages
 shop:
-  create: "&aYou have created a shop!"
+  create: "&7[&e⭐&7] &7You have created a shop!"
   cannot-create-have-shop: "&cYou cannot create a shop because you already have one!"
-  relocate: "&aYou have relocated your shop!"
+  relocate: "&7[&e⭐&7] &7You have relocated your shop!"
   cannot-relocate-no-shop: "&cYou don't have a shop!"
-  remove: "&aYou have removed your shop!"
+  remove: "&7[&e⭐&7] &7You have removed your shop!"
   cannot-remove-with-items: "&cYou cannot remove you shop because it contains items!"
   cannot-remove-no-shop: "&cYou don't have a shop!"
   not-enough-coins: "&cYou don't have enough coins to purchase this item!"
@@ -22,20 +22,20 @@ shop:
 
 # Buy item messages
 buy-item:
-  message: "&aYou've bought {itemName} for {price}"
+  message: "&7[&e⭐&7] &7&aYou've bought &a{itemName} &7for &a{price} coins&7."
   title:
     title: "&aYou've bought {itemName}"
     subTitle: "&afor {price}"
     fadeIn: 500
-    stay: 2000
+    stay: 4000
     fadeOut: 500
 
 # Sell item messages
 sell-item:
-  message: "&a{playerName} bought {itemName} from your shop. You've received {price}"
+  message: "&7[&e⭐&7] &a{playerName} &7bought &a{itemName} &7from your shop. You've received &a{price} coins&7."
   title:
     title: "&aYou've sold {itemName}"
-    subTitle: "&eBuyer: {buyer}"
+    subTitle: "&eBuyer: {playerName}"
     fadeIn: 500
-    stay: 2000
+    stay: 4000
     fadeOut: 500

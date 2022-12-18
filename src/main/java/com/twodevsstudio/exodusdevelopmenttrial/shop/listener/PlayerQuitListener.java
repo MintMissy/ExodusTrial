@@ -1,9 +1,9 @@
 package com.twodevsstudio.exodusdevelopmenttrial.shop.listener;
 
 import com.twodevsstudio.exodusdevelopmenttrial.ExodusDevelopmentTrial;
+import com.twodevsstudio.exodusdevelopmenttrial.api.task.GetPlayersTask;
 import com.twodevsstudio.exodusdevelopmenttrial.npc.manager.NpcManager;
 import com.twodevsstudio.exodusdevelopmenttrial.npc.model.npc.SpawnedShopNpc;
-import com.twodevsstudio.exodusdevelopmenttrial.npc.task.PlayersShopNpcDespawnTask;
 import com.twodevsstudio.exodusdevelopmenttrial.shop.model.PlayerShop;
 import com.twodevsstudio.exodusdevelopmenttrial.shop.repository.ShopsRepository;
 import org.bukkit.Bukkit;
@@ -43,7 +43,12 @@ public class PlayerQuitListener implements Listener {
 
               SpawnedShopNpc spawnedNpc = npcManager.getSpawnedShopNpc(player);
               if (spawnedNpc != null) {
-                new PlayersShopNpcDespawnTask(npcManager, spawnedNpc).runTask(plugin);
+                new GetPlayersTask(
+                        plugin,
+                        players -> {
+                          npcManager.despawnNpc(spawnedNpc, players);
+                        })
+                    .runTaskAsynchronously(plugin);
               }
             });
   }

@@ -1,6 +1,7 @@
 package com.twodevsstudio.exodusdevelopmenttrial.shop.gui;
 
 import com.twodevsstudio.exodusdevelopmenttrial.ExodusDevelopmentTrial;
+import com.twodevsstudio.exodusdevelopmenttrial.api.model.item.GuiItem;
 import com.twodevsstudio.exodusdevelopmenttrial.api.util.InventoryUtility;
 import com.twodevsstudio.exodusdevelopmenttrial.api.util.TextUtility;
 import com.twodevsstudio.exodusdevelopmenttrial.shop.model.BuyableItem;
@@ -17,7 +18,16 @@ public class ShopOwnerGui extends ShopGui {
     super(plugin, playerShop, viewer);
   }
 
-  @Override
+    @Override
+    public void update() {
+
+        super.update();
+
+        GuiItem addNewItemBtn = layout.get("add-item");
+        inventory.setItem(addNewItemBtn.getSlot(), addNewItemBtn.toItemStack());
+    }
+
+    @Override
   protected void onBuyableItemClick(BuyableItem item, boolean isShiftClick) {
 
     InventoryUtility.giveOrDropItem(viewer, item.getItemStack());

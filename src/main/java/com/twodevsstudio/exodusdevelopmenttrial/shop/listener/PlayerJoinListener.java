@@ -42,6 +42,7 @@ public class PlayerJoinListener implements Listener {
                 return;
               }
 
+              // TODO player join don't see npc
               // TODO fix shop npc on join - no skin & head
               npcManager.spawnAllExistingNpcs(Collections.singletonList(player));
               npcManager.spawnNewShopNpc(shop.getNpc(), Bukkit.getOnlinePlayers());

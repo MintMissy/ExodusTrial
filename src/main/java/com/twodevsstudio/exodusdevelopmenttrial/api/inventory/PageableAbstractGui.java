@@ -5,7 +5,6 @@ import com.twodevsstudio.exodusdevelopmenttrial.api.interfaces.Pageable;
 import com.twodevsstudio.exodusdevelopmenttrial.api.model.item.GuiItem;
 import com.twodevsstudio.exodusdevelopmenttrial.api.model.placeholder.Placeholder;
 import com.twodevsstudio.exodusdevelopmenttrial.api.util.ItemUtility;
-import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
@@ -25,8 +24,7 @@ public abstract class PageableAbstractGui extends AbstractGui implements Pageabl
 
     super.update();
 
-    setPreviousPageItem();
-    setNextPageItem();
+    setPaginatorItems();
   }
 
   @Override
@@ -66,6 +64,12 @@ public abstract class PageableAbstractGui extends AbstractGui implements Pageabl
   public void openPreviousPage(Player player) {
 
     open(player, currentPage - 1);
+  }
+
+  protected void setPaginatorItems(){
+
+        setPreviousPageItem();
+        setNextPageItem();
   }
 
   private void setNextPageItem() {

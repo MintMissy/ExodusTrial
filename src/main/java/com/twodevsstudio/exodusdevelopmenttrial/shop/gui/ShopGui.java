@@ -41,8 +41,7 @@ public class ShopGui extends PageableAbstractGui {
     InventoryUtility.fillInventory(
         inventory, InventoryUtility.getFillItem(), inventory.getSize() - 9, inventory.getSize());
 
-    super.update();
-
+    setPaginatorItems();
     updateBuyableItemsData();
     setBuyableItems();
   }

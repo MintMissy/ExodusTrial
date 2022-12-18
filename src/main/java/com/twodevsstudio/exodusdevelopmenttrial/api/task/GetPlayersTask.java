@@ -15,12 +15,12 @@ public class GetPlayersTask extends BukkitRunnable {
   private final ExodusDevelopmentTrial plugin;
 
   /** This is an async callback that will be called when the players are fetched */
-  private final Consumer<Collection<? extends Player>> callback;
+  private final Consumer<Collection<? extends Player>> asyncCallback;
 
   @Override
   public void run() {
 
     Collection<? extends Player> onlinePlayers = Bukkit.getOnlinePlayers();
-    Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> callback.accept(onlinePlayers));
+    Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> asyncCallback.accept(onlinePlayers));
   }
 }
