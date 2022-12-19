@@ -41,11 +41,6 @@ public class ShopNpcTemplate extends NpcTemplate {
     this.shopOwner = template.shopOwner;
   }
 
-  @Override
-  public String getName() {
-    return "§e⭐ §b" + super.getName();
-  }
-
   public Location getLocation() {
 
     if (location == null) {

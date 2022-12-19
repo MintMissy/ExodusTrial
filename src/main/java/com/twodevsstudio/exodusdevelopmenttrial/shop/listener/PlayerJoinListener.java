@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.UUID;
 
@@ -30,22 +31,19 @@ public class PlayerJoinListener implements Listener {
 
     Player player = event.getPlayer();
     UUID playerUuid = player.getUniqueId();
+    Collection<? extends Player> onlinePlayers = Bukkit.getOnlinePlayers();
 
     Bukkit.getScheduler()
         .runTaskAsynchronously(
             plugin,
             () -> {
+              npcManager.spawnAllExistingNpcs(Collections.singletonList(player));
+
               shopsRepository.loadShop(playerUuid);
               PlayerShop shop = shopsRepository.getShop(playerUuid);
-
-              if (shop == null) {
-                return;
+              if (shop != null) {
+                npcManager.spawnNewShopNpc(shop.getNpc(), onlinePlayers);
               }
-
-              // TODO player join don't see npc
-              // TODO fix shop npc on join - no skin & head
-              npcManager.spawnAllExistingNpcs(Collections.singletonList(player));
-              npcManager.spawnNewShopNpc(shop.getNpc(), Bukkit.getOnlinePlayers());
             });
   }
 }

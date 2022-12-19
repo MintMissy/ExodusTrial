@@ -32,10 +32,14 @@ public class NpcManager {
   public void spawnExistingNpc(
       AbstractSpawnedNpc npc, Collection<? extends Player> packetReceivers) {
 
-    npcPacketManager.sendPlayerInfoPacket(npc, packetReceivers);
-    npcPacketManager.sendNpcSpawnPacket(npc, packetReceivers);
-    npcPacketManager.sendEntityTeleportPacket(
-        npc.getLocation(), npc.getEntityId(), packetReceivers);
+    spawn(npc, packetReceivers);
+  }
+
+  public void updateAllExistingNpcs(Collection<? extends Player> packetReceivers) {
+
+    for (AbstractSpawnedNpc npc : spawnedNpcs.values()) {
+      npcPacketManager.sendNpcSpawnPacket(npc, packetReceivers);
+    }
   }
 
   public void spawnAllExistingNpcs(Collection<? extends Player> packetReceivers) {
@@ -64,28 +68,16 @@ public class NpcManager {
     int entityId = (int) (Math.random() * Integer.MAX_VALUE);
 
     SpawnedAbstractNpc spawnedNpc = new SpawnedAbstractNpc(npc, entityId);
-
     spawnedNpcs.put(entityId, spawnedNpc);
-
-    npcPacketManager.sendPlayerInfoPacket(spawnedNpc, packetReceivers);
-    npcPacketManager.sendNpcSpawnPacket(spawnedNpc, packetReceivers);
-    npcPacketManager.sendEntityTeleportPacket(spawnedNpc.getLocation(), entityId, packetReceivers);
-    npcPacketManager.sendHeadRotationPacket(spawnedNpc, entityId, packetReceivers);
-
-    // Give the time to the client to load the skin and npc
-    Bukkit.getScheduler()
-        .runTaskLater(
-            plugin,
-            () -> {
-              npcPacketManager.sendTabRemovePacket(npc, packetReceivers);
-            },
-            5L);
+    spawn(spawnedNpc, packetReceivers);
 
     return spawnedNpc;
   }
 
   public void updateNpcPosition(
-          AbstractSpawnedNpc spawnedNpc, Location newLocation, Collection<? extends Player> packetReceivers) {
+      AbstractSpawnedNpc spawnedNpc,
+      Location newLocation,
+      Collection<? extends Player> packetReceivers) {
 
     spawnedNpc.setLocation(newLocation);
     int entityId = spawnedNpc.getEntityId();
@@ -116,5 +108,25 @@ public class NpcManager {
         .filter(spawnedNpc -> spawnedNpc.getShopOwner().equals(shopOwner))
         .findFirst()
         .orElse(null);
+  }
+
+  private void spawn(AbstractSpawnedNpc npc, Collection<? extends Player> packetReceivers) {
+
+    int entityId = npc.getEntityId();
+
+    npcPacketManager.sendPlayerInfoPacket(npc, packetReceivers);
+    npcPacketManager.sendNpcSpawnPacket(npc, packetReceivers);
+    npcPacketManager.sendEntityTeleportPacket(npc.getLocation(), entityId, packetReceivers);
+    npcPacketManager.sendHeadRotationPacket(npc, entityId, packetReceivers);
+
+    // Give the time to the client to load the skin and npc
+    Bukkit.getScheduler()
+        .runTaskLater(
+            plugin,
+            () ->
+                Bukkit.getScheduler()
+                    .runTaskAsynchronously(
+                        plugin, () -> npcPacketManager.sendTabRemovePacket(npc, packetReceivers)),
+            5L);
   }
 }
